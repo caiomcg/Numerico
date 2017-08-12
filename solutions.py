@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -44,36 +44,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import sys
-from solucoes import lista1
-
-class Teste(object):
-    def __init__(self, mensagem="Ola mundo"):
-        self.mensagem = mensagem
-
-    def ola(self):
-        return self.__digaOla()
-
-    def __digaOla(self):
-        return self.mensagem
+import sys # Opções do sistema
+from solucoes import lista1 # Importa as soluções
 
 if __name__ == "__main__":
     sys.setrecursionlimit(100000) # A recursão limite do python precisa ser sobreescrita
 
-    LISTA1 = lista1.Lista1()
-
+    LISTA1 = lista1.Lista1() # Instancia as solucoes da lista 1
     print("Questão 15")
     print("Solução: " + str(LISTA1.questao15(1, 1000)))
 
     print("\nQuestão 16")
     print("Solução: " + str(LISTA1.questao16(-0.15)))
+    print("Solução: " + str(round(1.0 / LISTA1.questao16(0.15), 4)))
 
     print("\nQuestão 17")
-    print("Solução: " + str(LISTA1.questao17(1, 10)))
+    ANS = LISTA1.questao17(1, 10)
+    print("Solução: ")
+    for key, values in ANS.items():
+        print("\t[" + str(key) + "] - " + str(values))
 
     print("\nQuestão 18")
     print("Solução: " + str(LISTA1.questao18(4, 0.4)))
  
-    print("\nQuestão 19")
-    print("Solução(Crescente):   " + str(LISTA1.questao19(1, 10000)))
-    print("Solução(Decrescente): " + str(LISTA1.questao19(1, 10000, False)))
+    print("\nQuestão 20")
+    print("Solução(Crescente):   " + str(LISTA1.questao20(1, 10000)))
+    print("Solução(Decrescente): " + str(LISTA1.questao20(1, 10000, False)))

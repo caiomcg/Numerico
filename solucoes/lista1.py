@@ -44,7 +44,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import math
+import math # Operações matemáticas
 
 class Lista1(object):
     """
@@ -63,26 +63,28 @@ class Lista1(object):
 		float
 			O resultado do somatório
     	"""
-        if initial <= final:
-            return round((initial * (initial + 1)) / 2.0, 4) + self.questao15(initial + 1, final)
-        return 0
+        if initial <= final: # Realiza o calculo até que a condição de parada seja atingida
+            return round((initial * (initial + 1)) / 2.0, 4) + self.questao15(initial + 1, final) # Efetua o calculo: 
+			# i(i + 1) / 2 e chama a função recursivamente até que a condição de parada seja atingida
+        return 0 # Para a recursão
 
     def questao16(self, value, counter=1):
         """
-		Resolução da questão 16
+		Resolução da questão 16 e 19
 		----------
-		initial : float
+		value : float
 			O valor a ser utilizado na função
 		Returns
 		-------
 		float
-			O resultado do somatório
+			O resultado da função exponencial elevada a x
     	"""
-        if counter <= 2:
-            return round(1 if counter == 1 else value, 4) + self.questao16(value, counter + 1)
-        elif counter <= 25:
-            return round(value ** (counter - 1) / math.factorial(counter-1), 4) + self.questao16(value, counter + 1)
-        return 0
+        if counter <= 2: # Se a iteração estiver em seu 1º ou 2º loop tratamos os casos especiais
+            return round(1 if counter == 1 else value, 4) + self.questao16(value, counter + 1) # Tratamos e chamamos recursivamente
+        elif counter <= 25: # Realiza o calculo até que a condição de parada seja atingida
+            return round(value ** (counter - 1) / math.factorial(counter-1), 4) + self.questao16(value, counter + 1) # Efetua o calculo:
+			# 1 + x + + (x^2)/2! + (x^n)/n! + ... e chama a função recursivamente até que a condição de parada seja atingida
+        return 0 # Para a recursão
 
     def questao17(self, initial, final):
         """
@@ -97,31 +99,38 @@ class Lista1(object):
 		float
 			O resultado do somatório
     	"""
-        if initial <= final:
-            return round(math.cos((3 * math.pi * initial) / 4)* (2 / initial ** 2), 4) + self.questao17(initial + 1, final)
-        return 0
+        calculate = lambda x: math.cos((3 * math.pi * x) / 4) * (2.0 / x ** 2) # Definimos a função que retorna o valor da equação
+        results = {} # Dictionary onde os resultados serão mantidos
+
+        for x in range(initial, final+1): # Iteramos sobre os limites do somatório
+            if x == 1: # No primeiro elemento simplesmente calculamos e inserimos no dictionary
+                results[x] = round(calculate(x), 4) # Calcula, arredonda e insere
+            else: # Para os demais
+                results[x] = round((sum(results.values()) + calculate(x)), 4) # Calculamos o novo e somamos aos elementos anteriores
+
+        return results # Retornamos os resultados
 
     def questao18(self, radius, scale):
         """
 		Resolução da questão 18
 		----------
-		initial : int
-			O limite inferiro do somatório.
-		final : int
-			O limite superior do somatório.
+		radius : int
+			O raio da esfera.
+		scale : int
+			O valor a escalar a esfera.
 		Returns
 		-------
 		float
-			O resultado do somatório
+			O raio de uma esfera com volume x% maior
     	"""
-        volume = self.__volume(radius)
-        return self.__radius(volume * scale)
+        volume = self.__volume(radius) # Calculamos o volume da esfera de raio x
+        return round(self.__radius(volume + volume * scale), 4) # Calculamos o raio para a nova esfera 
 
 
 
-    def questao19(self, initial, final, increase=True):
+    def questao20(self, initial, final, increase=True):
         """
-		Resolução da questão 18
+		Resolução da questão 20
 		----------
 		initial : int
 			O limite inferiro do somatório.
@@ -132,19 +141,39 @@ class Lista1(object):
 		float
 			O resultado do somatório
     	"""
-        if increase:
-            if initial <= final:
-                return round(1.0 / initial ** 4, 4) + self.questao19(initial + 1, final)
-            else:
-                return 0
+        if increase: # Mudar para um somatorio negativo se for falso
+            if initial <= final: # Realiza o calculo até que a condição de parada seja atingida
+                return round(1.0 / initial ** 4, 4) + self.questao20(initial + 1, final) # Calculamos recursivamente
+            else: # Se o limite superior for ultrapassado
+                return 0 # Para a recursão
         else:
-            if final >= initial:
-                return round(1.0 / final ** 4, 4) + self.questao19(initial, final-1, False)
-            else: 
-                return 0
+            if final >= initial: # Realiza o calculo até que a condição de parada seja atingida
+                return round(1.0 / final ** 4, 4) + self.questao20(initial, final-1, False) # Calculamos recursivamente
+            else: # Se o limite superior for ultrapassado
+                return 0 # Para a recursão
 
     def __volume(self, radius):
-        return (4/3.0) * math.pi * (radius ** 3)
+        """
+		Calcula o volume de uma esfera
+		----------
+		radius : float
+			O raio da esfera
+		Returns
+		-------
+		float
+			O volume da esfera
+    	"""
+        return (4/3.0) * math.pi * (radius ** 3) # Calculo do volume de uma esfera
 
     def __radius(self, volume):
-        return ((3 * volume)  / (4 * math.pi)) ** (1/3.0)
+        """
+		Calcula o raio de uma esfera
+		----------
+		volume : float
+			O volume da esfera
+		Returns
+		-------
+		float
+			O raio da esfera
+    	"""
+        return ((3 * volume)  / (4 * math.pi)) ** (1/3.0) # Calculo do raio de uma esfera
