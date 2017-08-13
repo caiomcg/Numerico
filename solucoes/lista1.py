@@ -104,9 +104,9 @@ class Lista1(object):
 
         for x in range(initial, final+1): # Iteramos sobre os limites do somatório
             if x == 1: # No primeiro elemento simplesmente calculamos e inserimos no dictionary
-                results[x] = round(calculate(x), 4) # Calcula, arredonda e insere
+                results[x] = calculate(x) # Calcula, arredonda e insere
             else: # Para os demais
-                results[x] = round((sum(results.values()) + calculate(x)), 4) # Calculamos o novo e somamos aos elementos anteriores
+                results[x] = (results[x-1] + calculate(x)) # Calculamos o novo e somamos aos elementos anteriores
 
         return results # Retornamos os resultados
 
