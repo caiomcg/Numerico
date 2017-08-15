@@ -60,6 +60,7 @@ if __name__ == "__main__":
 
     print("\nQuestão 17")
     ANS = LISTA1.questao17(1, 10)
+    
     print("Solução: ")
     for key, values in ANS.items():
         print("\t[" + str(key) + "] - " + str(values))
@@ -68,5 +69,11 @@ if __name__ == "__main__":
     print("Solução: " + str(LISTA1.questao18(4, 0.4)))
  
     print("\nQuestão 20")
-    print("Solução(Crescente):   " + str(LISTA1.questao20(1, 10000)))
-    print("Solução(Decrescente): " + str(LISTA1.questao20(1, 10000, False)))
+    NROUND      = 1.08232323371
+    CRESCENTE   = LISTA1.questao20(1, 10000)
+    DECRESCENTE = LISTA1.questao20(1, 10000, False)
+
+    print("Solução(Crescente):   " + str(CRESCENTE))
+    print("Solução(Crescente) - Error relativo percentual: " + str(round((((NROUND - CRESCENTE) / CRESCENTE) * 100), 4)) + "%")
+    print("Solução(Decrescente): " + str(DECRESCENTE))
+    print("Solução(Decrescente) - Error relativo percentual: " + str(round((((NROUND - DECRESCENTE) / DECRESCENTE) * 100), 4)) + "%")
