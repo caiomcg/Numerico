@@ -63,7 +63,7 @@ if __name__ == "__main__":
     
     print("Solução: ")
     for key, values in ANS.items():
-        print("\t[" + str(key) + "] - " + str(values))
+        print("\t[" + str(key) + "] - " + str(round(values, 4)))
 
     print("\nQuestão 18")
     print("Solução: " + str(LISTA1.questao18(4, 0.4)))
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     CRESCENTE   = LISTA1.questao20(1, 10000)
     DECRESCENTE = LISTA1.questao20(1, 10000, False)
 
-    print("Solução(Crescente):   " + str(CRESCENTE))
+    print("Solução(Crescente):   " + str(round(CRESCENTE, 4)))
     print("Solução(Crescente) - Error relativo percentual: " + str(round((((NROUND - CRESCENTE) / CRESCENTE) * 100), 4)) + "%")
-    print("Solução(Decrescente): " + str(DECRESCENTE))
+    print("Solução(Decrescente): " + str(round(DECRESCENTE, 4)))
     print("Solução(Decrescente) - Error relativo percentual: " + str(round((((NROUND - DECRESCENTE) / DECRESCENTE) * 100), 4)) + "%")
