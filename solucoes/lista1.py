@@ -99,7 +99,7 @@ class Lista1(object):
 		float
 			O resultado do somatório
     	"""
-        calculate = lambda x: math.cos((3 * math.pi * x) / 4) * (2.0 / x ** 2) # Definimos a função que retorna o valor da equação
+        calculate = lambda x: round(math.cos((3 * math.pi * x) / 4) * (2.0 / x ** 2), 4) # Definimos a função que retorna o valor da equação
         results = {} # Dictionary onde os resultados serão mantidos
 
         for x in range(initial, final+1): # Iteramos sobre os limites do somatório
