@@ -45,14 +45,14 @@ SOFTWARE.
 """
 
 import sys # Opções do sistema
-from solucoes import lista1 # Importa as soluções
-from solucoes import lista2 # Importa as soluções da segunda lista
+from solucoes import Grupo5_Lista1 # Importa as soluções
+from solucoes import Grupo5_Lista2 # Importa as soluções da segunda lista
 
 if __name__ == "__main__":
     sys.setrecursionlimit(100000) # A recursão limite do python precisa ser sobreescrita
 
-    LISTA1 = lista1.Lista1() # Instancia as solucoes da lista 1
-    LISTA2 = lista2.Lista2() # Instancia as solucoes da lista 2
+    LISTA1 = Grupo5_Lista1.Lista1() # Instancia as solucoes da lista 1
+    LISTA2 = Grupo5_Lista2.Lista2() # Instancia as solucoes da lista 2
 
     print("===Lista 1===\n\n")
 
