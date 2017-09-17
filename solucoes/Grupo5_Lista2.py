@@ -44,12 +44,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import math # Operações matemáticas
+from solucoes import Grupo5_ListaX
 
-class Lista2(object):
+class Lista2(Grupo5_ListaX.ListaX):
     """
     As questões implementadas consistem em metodos desta classe.
     """
+
+    def __init__(self):
+        Grupo5_ListaX.ListaX.__init__(self, "Lista2")
+
     def bissecao(self, func, a, b, tol, n):
         """
 		Resolução parcial da questão 1 da lista 2
@@ -109,7 +113,7 @@ class Lista2(object):
                     if func(a) * func(b) < 0:
                         b = c
                     else:
-                        a = c  
+                        a = c
                 else:
                     return round(c, 4)
                 c = (a * func(b) - b * func(a)) / (func(b) - func(a))
@@ -148,7 +152,7 @@ class Lista2(object):
                 return round(b, 4)
             a = b
             k += 1
-    
+
     def secante(self, func, a, b, tol, n):
         """
 		Resolução parcial da questão 1 da lista 2
@@ -177,5 +181,116 @@ class Lista2(object):
                 a = b
                 b = c
             k += 1
-        
+
         return round(c, 4)
+
+    def test(self):
+        """
+        Define todos os testes da lista
+        """
+        print("Método da bisseção:\n")
+        print("Para: f(x) = x^3 - 9x + 3")
+
+        a = lambda x: x**3 - 9*x + 3
+        dadx = lambda x: 3*x**2 - 9
+
+        print("\nNo Intervalo [-5, -3]")
+        result = self.bissecao(a, -5, -3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [0, 1]")
+        result = self.bissecao(a, 0, 1, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [2, 3]")
+        result = self.bissecao(a, 2, 3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        #------------------------------------------------------------------
+
+        print("\n\nMétodo da posição falsa:\n")
+        print("Para: f(x) = x^3 - 9x + 3")
+
+        print("\nNo Intervalo [-5, -3]")
+        result = self.posicaoFalsa(a, -5, -3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [0, 1]")
+        result = self.posicaoFalsa(a, 0, 1, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [2, 3]")
+        result = self.posicaoFalsa(a, 2, 3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        #------------------------------------------------------------------
+
+        print("\n\nMétodo de Newton-Raphson:\n")
+        print("Para: f(x) = x^3 - 9x + 3")
+
+        print("\nNo Intervalo [-5, -3]")
+        result = self.newtonRaphson(a, dadx, -5, -3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [0, 1]")
+        result = self.newtonRaphson(a, dadx, 0, 1, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [2, 3]")
+        result = self.newtonRaphson(a, dadx, 2, 3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+
+        #------------------------------------------------------------------
+
+        print("\n\nMétodo da secante:\n")
+        print("Para: f(x) = x^3 - 9x + 3")
+
+        print("\nNo Intervalo [-5, -3]")
+        result = self.secante(a, -5, -3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [0, 1]")
+        result = self.secante(a, 0, 1, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+
+        print("\nNo Intervalo [2, 3]")
+        result = self.secante(a, 2, 3, 0.001, 11)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("Resultado: " + str(result))
+            

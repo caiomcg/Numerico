@@ -45,11 +45,16 @@ SOFTWARE.
 """
 
 import math # Operações matemáticas
+from solucoes import Grupo5_ListaX
 
-class Lista1(object):
+class Lista1(Grupo5_ListaX.ListaX):
     """
     As questões implementadas consistem em metodos desta classe.
     """
+
+    def __init__(self):
+        Grupo5_ListaX.ListaX.__init__(self, "Lista1")
+
     def questao15(self, initial=0, final=0):
         """
 		Resolução da questão 15
@@ -177,3 +182,34 @@ class Lista1(object):
 			O raio da esfera
     	"""
         return ((3 * volume)  / (4 * math.pi)) ** (1/3.0) # Calculo do raio de uma esfera
+
+    def test(self):
+        """
+        Define todos os testes da lista
+        """
+        print(" - Questão 15")
+        print("Solução: " + str(self.questao15(1, 1000)))
+
+        print("\n - Questão 16")
+        print("Solução: " + str(self.questao16(-0.15)))
+        print("Solução: " + str(round(1.0 / self.questao16(0.15), 4)))
+
+        print("\n - Questão 17")
+        ans = self.questao17(1, 10)
+
+        print("Solução: ")
+        for key, values in ans.items():
+            print("\t[" + str(key) + "] - " + str(round(values, 4)))
+
+        print("\n - Questão 18")
+        print("Solução: " + str(self.questao18(4, 0.4)))
+
+        print("\n - Questão 20")
+        nround = 1.08232323371
+        crescente = self.questao20(1, 10000)
+        decrescente = self.questao20(1, 10000, False)
+
+        print("Solução(Crescente):   " + str(round(crescente, 4)))
+        print("Solução(Crescente) - Error relativo percentual: " + str(round((((nround - crescente) / crescente) * 100), 4)) + "%")
+        print("Solução(Decrescente): " + str(round(decrescente, 4)))
+        print("Solução(Decrescente) - Error relativo percentual: " + str(round((((nround - decrescente) / decrescente) * 100), 4)) + "%")
