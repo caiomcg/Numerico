@@ -53,12 +53,55 @@ class Lista3(Grupo5_ListaX.ListaX):
     def __init__(self):
         Grupo5_ListaX.ListaX.__init__(self, "Lista3")
 
-    def questao01_a(self):
+    def questao01_a(self, matriz_A, vetor_b):
+        
         """
         documentar
+        Método de Eliminação de Gauss ( http://www.dcc.ufrj.br/~rincon/Disciplinas/Algebra%20Linear/Aula_013.pdf )
+
+        matriz_A : matriz de coeficientes
+
+        vetor_b : "matriz" de veriaveis livres.
+
+        retorno: solução do sistema
+
+    
+        """
+        if len(matriz_A) != len(vetor_b):
+            return None
+        matrizExtendida = matriz_A[:]
+        for i in range(len(matrizExtendida)):
+            matrizExtendida[i].append(vetor_b[i])
+
+        for i in range(len(matrizExtendida)):
+           # print(i)
+           # print("pivo:", matrizExtendida[i][i])
+            #print((len(matrizExtendida)-i))
+            for j in range((i+1),(len(matrizExtendida)), 1):
+              #  print(j)
+                if matrizExtendida[i][i] != 0:
+                    c = matrizExtendida[j][i]/matrizExtendida[i][i]
+                    #print(c)
+                    if c != 0:
+                        for k in range(len(matrizExtendida[i])):
+                            matrizExtendida[j][k]-=c*matrizExtendida[i][k]
+                else:
+                    return None
+        #return matrizExtendida
+        solucoes=[]
+        solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
+        #for i in matrizExtendida: # matriz triangular
+        #        print(i)
+        for i in range(len(matrizExtendida)-2,-1,-1):
+            c=0
+            for j in range(len(solucoes)):
+                c+=solucoes[j]*matrizExtendida[i][len(matrizExtendida)-1-j]
+            solucoes.append((matrizExtendida[i][len(matrizExtendida)]-c)/matrizExtendida[i][i])
+        solucoes.reverse()
+        return solucoes
         """
         pass
-
+        """
     def questao01_b(self):
         """
         documentar
@@ -105,4 +148,27 @@ class Lista3(Grupo5_ListaX.ListaX):
         """
         Define todos os testes da lista
         """
-        pass
+
+        print("Eliminação de Gauss simples:\n")
+        print("Para:\n")
+        print("[1 -1 2 2]")
+        print("[2 1 -1 1]")
+        print("[-2 -5 3 3]")
+        matriz = []
+        linha = [1, -1, 2]
+        matriz.append(linha)
+        linha = [2, 1, -1]
+        matriz.append(linha)
+        linha = [-2, -5, 3]
+        matriz.append(linha)
+        vetor=[2, 1, 3]
+        
+        result = self.questao01_a(matriz, vetor)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao:")
+            print(result)
+
+
+        #------------------------------------------------------------------
