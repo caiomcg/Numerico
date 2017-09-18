@@ -67,12 +67,16 @@ class Lista3(Grupo5_ListaX.ListaX):
 
     
         """
+       ###### Trecho para obtenção da matriz extendida
+        
         if len(matriz_A) != len(vetor_b):
             return None
         matrizExtendida = matriz_A[:]
         for i in range(len(matrizExtendida)):
             matrizExtendida[i].append(vetor_b[i])
+        ######
 
+            
         for i in range(len(matrizExtendida)):
            # print(i)
            # print("pivo:", matrizExtendida[i][i])
@@ -102,11 +106,61 @@ class Lista3(Grupo5_ListaX.ListaX):
         """
         pass
         """
-    def questao01_b(self):
+    def questao01_b(self, matriz_A, vetor_b):
+             
         """
         documentar
+        Método de Eliminação de Gauss ( http://www.dcc.ufrj.br/~rincon/Disciplinas/Algebra%20Linear/Aula_013.pdf )
+
+        matriz_A : matriz de coeficientes
+
+        vetor_b : "matriz" de veriaveis livres.
+
+        retorno: solução do sistema
+
+    
+        """
+
+        ###### Trecho para obtenção da matriz extendida
+        
+        if len(matriz_A) != len(vetor_b):
+            return None
+        matrizExtendida = matriz_A[:]
+        for i in range(len(matrizExtendida)):
+            matrizExtendida[i].append(vetor_b[i])
+        ######
+            
+        maiorEmModulo=0
+        for i in range(len(matrizExtendida)):
+            for i2 in range(i, len(matrizExtendida),1):
+                if abs(matrizExtendida[i2][i])>matrizExtendida[maiorEmModulo][i]:
+                    maiorEmModulo=i2
+            matrizExtendida.insert(i,matrizExtendida.pop(maiorEmModulo))
+         #   print(matrizExtendida[i])
+            for j in range((i+1),(len(matrizExtendida)), 1):
+              #  print(j)
+                if matrizExtendida[i][i] != 0:
+                    c = matrizExtendida[j][i]/matrizExtendida[i][i]
+                    if c != 0:
+                        for k in range(len(matrizExtendida[i])):
+                            matrizExtendida[j][k]-=c*matrizExtendida[i][k]
+                else:
+                    return None
+        #return matrizExtendida
+        solucoes=[]
+        solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
+      #  for i in matrizExtendida: # matriz triangular
+      #         print(i)
+        for i in range(len(matrizExtendida)-2,-1,-1):
+            c=0
+            for j in range(len(solucoes)):
+                c+=solucoes[j]*matrizExtendida[i][len(matrizExtendida)-1-j]
+            solucoes.append((matrizExtendida[i][len(matrizExtendida)]-c)/matrizExtendida[i][i])
+        solucoes.reverse()
+        return solucoes
         """
         pass
+        """
 
     def questao01_c(self):
         """
@@ -148,7 +202,7 @@ class Lista3(Grupo5_ListaX.ListaX):
         """
         Define todos os testes da lista
         """
-
+      
         print("Eliminação de Gauss simples:\n")
         print("Para:\n")
         print("[1 -1 2 2]")
@@ -170,5 +224,46 @@ class Lista3(Grupo5_ListaX.ListaX):
             print("solucao:")
             print(result)
 
+
+        print("\nEliminação de Gauss com pivoteamento parcial:")
+        print("\nPara:\n")
+        print("[1 -1 2 2]")
+        print("[2 1 -1 1]")
+        print("[-2 -5 3 3]")
+        matriz = []
+        linha = [1, -1, 2]
+        matriz.append(linha)
+        linha = [2, 1, -1]
+        matriz.append(linha)
+        linha = [-2, -5, 3]
+        matriz.append(linha)
+        vetor=[2, 1, 3]
+        
+        result = self.questao01_b(matriz, vetor)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao:")
+            print(result)
+      
+        print("\nPara:\n")
+        print("[1 2 3 -2]")
+        print("[2 7 -1 3]")
+        print("[1 -1 2 -1]")
+        matriz = []
+        linha = [1, 2, 3]
+        matriz.append(linha)
+        linha = [2, 7, -1]
+        matriz.append(linha)
+        linha = [1, -1, 2]
+        matriz.append(linha)
+        vetor=[-2, 3, -1]
+        
+        result = self.questao01_b(matriz, vetor)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao:")
+            print(result)
 
         #------------------------------------------------------------------
