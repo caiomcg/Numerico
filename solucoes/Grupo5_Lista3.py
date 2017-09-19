@@ -96,8 +96,6 @@ class Lista3(Grupo5_ListaX.ListaX):
         #return matrizExtendida
         solucoes=[]
         solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
-        print("*********************")
-        print(matrizExtendida)
         #for i in matrizExtendida: # matriz triangular
         #        print(i)
         for i in range(len(matrizExtendida)-2,-1,-1):
