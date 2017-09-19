@@ -46,6 +46,8 @@ SOFTWARE.
 
 from solucoes import Grupo5_ListaX
 
+import math
+
 class Lista3(Grupo5_ListaX.ListaX):
     """
     As questões implementadas consistem em metodos desta classe.
@@ -94,6 +96,8 @@ class Lista3(Grupo5_ListaX.ListaX):
         #return matrizExtendida
         solucoes=[]
         solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
+        print("*********************")
+        print(matrizExtendida)
         #for i in matrizExtendida: # matriz triangular
         #        print(i)
         for i in range(len(matrizExtendida)-2,-1,-1):
@@ -146,7 +150,7 @@ class Lista3(Grupo5_ListaX.ListaX):
                             matrizExtendida[j][k]-=c*matrizExtendida[i][k]
                 else:
                     return None
-        #return matrizExtendida
+        
         solucoes=[]
         solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
       #  for i in matrizExtendida: # matriz triangular
@@ -158,15 +162,25 @@ class Lista3(Grupo5_ListaX.ListaX):
             solucoes.append((matrizExtendida[i][len(matrizExtendida)]-c)/matrizExtendida[i][i])
         solucoes.reverse()
         return solucoes
-        """
-        pass
-        """
 
-    def questao01_c(self):
+    def questao01_c(self, matrix):
         """
         documentar
         """
-        pass
+        size = len(matrix)
+        L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
+
+        for i in range(size):
+            for j in range(i+1, size):
+                if matrix[i][i] != 0:
+                    c = matrix[j][i]/matrix[i][i]
+                    L[j][i] = c
+                    matrix[j][i] = 0
+                    if c != 0:
+                        for k in range(i+1, size):
+                            matrix[j][k]-=c*matrix[i][k]
+    
+        return L, matrix
 
     def questao01_d(self):
         """
@@ -208,13 +222,7 @@ class Lista3(Grupo5_ListaX.ListaX):
         print("[1 -1 2 2]")
         print("[2 1 -1 1]")
         print("[-2 -5 3 3]")
-        matriz = []
-        linha = [1, -1, 2]
-        matriz.append(linha)
-        linha = [2, 1, -1]
-        matriz.append(linha)
-        linha = [-2, -5, 3]
-        matriz.append(linha)
+        matriz = [[1, -1, 2], [2, 1, -1], [-2, -5, 3]]
         vetor=[2, 1, 3]
         
         result = self.questao01_a(matriz, vetor)
@@ -230,13 +238,7 @@ class Lista3(Grupo5_ListaX.ListaX):
         print("[1 -1 2 2]")
         print("[2 1 -1 1]")
         print("[-2 -5 3 3]")
-        matriz = []
-        linha = [1, -1, 2]
-        matriz.append(linha)
-        linha = [2, 1, -1]
-        matriz.append(linha)
-        linha = [-2, -5, 3]
-        matriz.append(linha)
+        matriz = [[1, -1, 2], [2, 1, -1], [-2, -5, 3]]
         vetor=[2, 1, 3]
         
         result = self.questao01_b(matriz, vetor)
@@ -250,13 +252,7 @@ class Lista3(Grupo5_ListaX.ListaX):
         print("[1 2 3 -2]")
         print("[2 7 -1 3]")
         print("[1 -1 2 -1]")
-        matriz = []
-        linha = [1, 2, 3]
-        matriz.append(linha)
-        linha = [2, 7, -1]
-        matriz.append(linha)
-        linha = [1, -1, 2]
-        matriz.append(linha)
+        matriz = [[1, 2, 3], [2, 7, -1], [1, -1, 2]]
         vetor=[-2, 3, -1]
         
         result = self.questao01_b(matriz, vetor)
@@ -266,4 +262,48 @@ class Lista3(Grupo5_ListaX.ListaX):
             print("solucao:")
             print(result)
 
-        #------------------------------------------------------------------
+        print("\n\nDecomposição LU via eliminação de Gauss simples:\n")
+        print("Para:\n")
+
+        matrix = [[3, 2, 4], [1, 1, 2], [4, 3, 2]]
+        for x in range(len(matrix)):
+            print(matrix[x])
+        
+        L, U = self.questao01_c(matrix)
+        
+        print("\nL:")
+
+        for x in range(len(L)):
+            for y in range(len(L[x])):
+                L[x][y] = round(L[x][y], 4)
+            print(L[x])
+
+        print("\nU:")
+
+        for x in range(len(U)):
+            for y in range(len(U[x])):
+                U[x][y] = round(U[x][y], 4)
+            print(U[x])
+
+        print("\n\nDecomposição LU via eliminação de Gauss simples:\n")
+        print("Para:\n")
+
+        matrix = [[3, 2, 4], [1, 1, 2], [4, 3, 2]]
+        for x in range(len(matrix)):
+            print(matrix[x])
+        
+        L, U = self.questao01_c(matrix)
+        
+        print("\nL:")
+
+        for x in range(len(L)):
+            for y in range(len(L[x])):
+                L[x][y] = round(L[x][y], 4)
+            print(L[x])
+
+        print("\nU:")
+
+        for x in range(len(U)):
+            for y in range(len(U[x])):
+                U[x][y] = round(U[x][y], 4)
+            print(U[x])
