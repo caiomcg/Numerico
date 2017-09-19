@@ -180,31 +180,32 @@ class Lista3(Grupo5_ListaX.ListaX):
     
         return L, matrix
 
-    def questao01_d(self):
+    def questao01_d(self, matrix):
         """
         documentar
         """
-        pass
+
+        size = len(matrix)
+        L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
+
+        maiorEmModulo=0
+        
+        for i in range(size):
+            for i2 in range(i, size,1):
+                if abs(matrix[i2][i])>matrix[maiorEmModulo][i]:
+                    maiorEmModulo=i2
+            matrix.insert(i,matrix.pop(maiorEmModulo))
+            for j in range((i+1),(size), 1):
+                if matrix[i][i] != 0:
+                    c = matrix[j][i]/matrix[i][i]
+                    L[j][i] = c
+                    if c != 0:
+                        for k in range(len(matrix[i])):
+                            matrix[j][k]-=c*matrix[i][k]
+
+        return L, matrix
 
     def questao01_e(self):
-        """
-        documentar
-        """
-        pass
-
-    def questao01_f(self):
-        """
-        documentar
-        """
-        pass
-
-    def questao01_g(self):
-        """
-        documentar
-        """
-        pass
-
-    def questao01_h(self):
         """
         documentar
         """
@@ -283,14 +284,14 @@ class Lista3(Grupo5_ListaX.ListaX):
                 U[x][y] = round(U[x][y], 4)
             print(U[x])
 
-        print("\n\nDecomposição LU via eliminação de Gauss simples:\n")
+        print("\n\nDecomposição LU via eliminação de Gauss parcial:\n")
         print("Para:\n")
 
-        matrix = [[3, 2, 4], [1, 1, 2], [4, 3, 2]]
+        matrix = [[1, 3, 5], [2, 4, 7], [1, 1, 0]]
         for x in range(len(matrix)):
             print(matrix[x])
         
-        L, U = self.questao01_c(matrix)
+        L, U = self.questao01_d(matrix)
         
         print("\nL:")
 
