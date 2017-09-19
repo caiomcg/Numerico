@@ -218,33 +218,22 @@ class Lista3(Grupo5_ListaX.ListaX):
         y = [0, 0, 0]
 
         mult = 0.0
-        """
-        for i in range(size):
-            for j in range(i+1, size):
-                if matrix[i][i] != 0:
-                    c = matrix[j][i]/matrix[i][i]
-                    L[j][i] = c
-                    matrix[j][i] = 0
-                    if c != 0:
-                        for k in range(i+1, size):
-                            matrix[j][k]-=c*matrix[i][k]
-        """
 
         for i in range(1, size):
             for j in range(i):
                 mult = U[i][j]/U[j][j]
                 L[i][j] = mult
                 for k in range(size):
-                    U[i][k] -= mult * U[i-1][k]
+                    U[i][k] -= mult * U[j][k]
 
         for i in range(size):
             y[i] = vector[i]
             for j in range(i):
                 y[i] -= L[i][j]*y[j]
 
-        for i in range(0, size-1, -1):
-            x[i] = b[i]
-            for j in range(i, size-1, -1):
+        for i in range(size-1, -1, -1):
+            x[i] = vector[i]
+            for j in range(i, size, -1):
                 x[i] -= L[i][j]*x[j]
         return L, U, x, y
         
