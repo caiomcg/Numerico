@@ -189,7 +189,7 @@ class Lista3(Grupo5_ListaX.ListaX):
         L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
 
         maiorEmModulo=0
-        
+
         for i in range(size):
             for i2 in range(i, size,1):
                 if abs(matrix[i2][i])>matrix[maiorEmModulo][i]:
@@ -205,11 +205,49 @@ class Lista3(Grupo5_ListaX.ListaX):
 
         return L, matrix
 
-    def questao01_e(self):
+    def questao01_e(self, matrix, vector):
         """
         documentar
         """
-        pass
+
+        size = len(matrix)
+        L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
+        U = matrix
+
+        x = [0, 0, 0]
+        y = [0, 0, 0]
+
+        mult = 0.0
+        """
+        for i in range(size):
+            for j in range(i+1, size):
+                if matrix[i][i] != 0:
+                    c = matrix[j][i]/matrix[i][i]
+                    L[j][i] = c
+                    matrix[j][i] = 0
+                    if c != 0:
+                        for k in range(i+1, size):
+                            matrix[j][k]-=c*matrix[i][k]
+        """
+
+        for i in range(1, size):
+            for j in range(i):
+                mult = U[i][j]/U[j][j]
+                L[i][j] = mult
+                for k in range(size):
+                    U[i][k] -= mult * U[i-1][k]
+
+        for i in range(size):
+            y[i] = vector[i]
+            for j in range(i):
+                y[i] -= L[i][j]*y[j]
+
+        for i in range(0, size-1, -1):
+            x[i] = b[i]
+            for j in range(i, size-1, -1):
+                x[i] -= L[i][j]*x[j]
+        return L, U, x, y
+        
 
     def test(self):
         """
@@ -306,3 +344,36 @@ class Lista3(Grupo5_ListaX.ListaX):
             for y in range(len(U[x])):
                 U[x][y] = round(U[x][y], 4)
             print(U[x])
+
+        print("\n\nDecomposição LU:\n")
+        print("Para:\n")
+
+        matrix = [[5,1,-2], [3,-9.4,1.8], [1,2.2,4.6]]
+        vector = [10,22,10]
+
+        for x in range(len(matrix)):
+            print(matrix[x])
+        
+        print("\n" + str(vector))
+        
+        L, U, x, y = self.questao01_e(matrix, vector)
+        
+        print("\nL:")
+
+        for i in range(len(L)):
+            for j in range(len(L[i])):
+                L[i][j] = round(L[i][j], 4)
+            print(L[i])
+
+        print("\nU:")
+
+        for i in range(len(U)):
+            for j in range(len(U[i])):
+                U[i][j] = round(U[i][j], 4)
+            print(U[i])
+
+        print("\nX:")
+        print(x)
+
+        print("\nY:")
+        print(y)
