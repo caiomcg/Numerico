@@ -49,6 +49,7 @@ import sys # Opções do sistema
 from solucoes import Grupo5_Lista1 # Importa as soluções da primeira lista
 from solucoes import Grupo5_Lista2 # Importa as soluções da segunda lista
 from solucoes import Grupo5_Lista3 # Importa as soluções da terceira lista
+from solucoes import Grupo5_Lista4 # Importa as soluções da terceira lista
 
 if __name__ == "__main__":
     sys.setrecursionlimit(100000) # A recursão limite do python precisa ser sobreescrita
@@ -58,6 +59,7 @@ if __name__ == "__main__":
     LISTAS.append(Grupo5_Lista1.Lista1()) # Instancia as solucoes da lista 1
     LISTAS.append(Grupo5_Lista2.Lista2()) # Instancia as solucoes da lista 2
     LISTAS.append(Grupo5_Lista3.Lista3()) # Instancia as solucoes da lista 3
+    LISTAS.append(Grupo5_Lista4.Lista4()) # Instancia as solucoes da lista 4
 
     for lista in LISTAS:
         print("\n\n --- " + str(lista.getname()) + "---\n\n")
