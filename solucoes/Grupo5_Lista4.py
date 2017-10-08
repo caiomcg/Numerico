@@ -55,111 +55,71 @@ class Lista4(Grupo5_ListaX.ListaX):
     def __init__(self):
         Grupo5_ListaX.ListaX.__init__(self, "Lista4")
 
-    def questao01(self, matriz_A, vetor_b):
-        
-        """
-        documentar
-      
-    
-        """
-        """
-       ###### Trecho para obtenção da matriz extendida
-        
-        if len(matriz_A) != len(vetor_b):
-            return None
-        matrizExtendida = matriz_A[:]
-        for i in range(len(matrizExtendida)):
-            matrizExtendida[i].append(vetor_b[i])
-        ######
+    def questao01(self, matriz_A, vetor_x_k, vetor_b):
 
-            
-        for i in range(len(matrizExtendida)):
-           # print(i)
-           # print("pivo:", matrizExtendida[i][i])
-            #print((len(matrizExtendida)-i))
-            for j in range((i+1),(len(matrizExtendida)), 1):
-              #  print(j)
-                if matrizExtendida[i][i] != 0:
-                    c = matrizExtendida[j][i]/matrizExtendida[i][i]
-                    #print(c)
-                    if c != 0:
-                        for k in range(len(matrizExtendida[i])):
-                            matrizExtendida[j][k]-=c*matrizExtendida[i][k]
-                else:
-                    return None
-        #return matrizExtendida
-        solucoes=[]
-        solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
-        #for i in matrizExtendida: # matriz triangular
-        #        print(i)
-        for i in range(len(matrizExtendida)-2,-1,-1):
-            c=0
-            for j in range(len(solucoes)):
-                c+=solucoes[j]*matrizExtendida[i][len(matrizExtendida)-1-j]
-            solucoes.append((matrizExtendida[i][len(matrizExtendida)]-c)/matrizExtendida[i][i])
-        solucoes.reverse()
-        return solucoes
-        
+        for i in range(len(matriz_A)):
+            if matriz_A[i][i]== 0:
+                print("coeficiente nulo na diagonal principal")
+                return None
+        alfa=vetor_x_k[:]
+        for i in range(len(matriz_A)):
+            alfa[i]=0
+            for j in range(0,i,1):
+                #print(matriz_A[i][j])
+                alfa[i]+=abs(matriz_A[i][j])
+            for j in range(i+1,len(matriz_A),1):
+                #print(matriz_A[i][j])
+                alfa[i]+=abs(matriz_A[i][j])
+            alfa[i]/=abs(matriz_A[i][i])
+            if alfa[i] >= 1 :
+                print("alfa: ",alfa[i])
+                return "não se pode afirmar a convergencia"
+            return "ok"
+        """
         pass
         """
-    def questao02(self, matriz_A, vetor_b):
-             
-        """
-        documentar
-        Método de Eliminação de Gauss ( http://www.dcc.ufrj.br/~rincon/Disciplinas/Algebra%20Linear/Aula_013.pdf )
-
-        matriz_A : matriz de coeficientes
-
-        vetor_b : "matriz" de veriaveis livres.
-
-        retorno: solução do sistema
-
-    
-        """
-        """
-
-        ###### Trecho para obtenção da matriz extendida
-        
-        if len(matriz_A) != len(vetor_b):
+    def questao02(self, matriz_A, vetor_x_k, vetor_b):
+        if self.questao01(matriz_A, vetor_x_k, vetor_b) == None:
+            print("coeficiente nulo na diagonal principal")
             return None
-        matrizExtendida = matriz_A[:]
-        for i in range(len(matrizExtendida)):
-            matrizExtendida[i].append(vetor_b[i])
-        ######
-            
-        maiorEmModulo=0
-        for i in range(len(matrizExtendida)):
-            for i2 in range(i, len(matrizExtendida),1):
-                if abs(matrizExtendida[i2][i])>matrizExtendida[maiorEmModulo][i]:
-                    maiorEmModulo=i2
-            matrizExtendida.insert(i,matrizExtendida.pop(maiorEmModulo))
-         #   print(matrizExtendida[i])
-            for j in range((i+1),(len(matrizExtendida)), 1):
-              #  print(j)
-                if matrizExtendida[i][i] != 0:
-                    c = matrizExtendida[j][i]/matrizExtendida[i][i]
-                    if c != 0:
-                        for k in range(len(matrizExtendida[i])):
-                            matrizExtendida[j][k]-=c*matrizExtendida[i][k]
-                else:
-                    return None
-        
-        solucoes=[]
-        solucoes.append(matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)]/matrizExtendida[len(matrizExtendida)-1][len(matrizExtendida)-1])
-      #  for i in matrizExtendida: # matriz triangular
-      #         print(i)
-        for i in range(len(matrizExtendida)-2,-1,-1):
-            c=0
-            for j in range(len(solucoes)):
-                c+=solucoes[j]*matrizExtendida[i][len(matrizExtendida)-1-j]
-            solucoes.append((matrizExtendida[i][len(matrizExtendida)]-c)/matrizExtendida[i][i])
-        solucoes.reverse()
-        return solucoes
-    """
-    def questao03(self, matrix):
+        vetor_x_k1=vetor_x_k[:]
+        for iterecoes in range(0,20, 1): # A questão não expecificou nenhum parametro sobre quando parar
+            vetor_x_k=vetor_x_k1[:]
+            for i in range(len(matriz_A)):
+                vetor_x_k1[i]=0
+                
+                for j in range(0,i,1):
+                    #print(matriz_A[i][j]," * ", vetor_x_k[j])
+                    vetor_x_k1[i]-=matriz_A[i][j]*vetor_x_k[j]
+                    
+                for j in range(i+1,len(matriz_A),1):
+                    #print(matriz_A[i][j]," * ", vetor_x_k[j])
+                    vetor_x_k1[i]-=matriz_A[i][j]*vetor_x_k[j]
+
+                vetor_x_k1[i]+=vetor_b[i]
+                vetor_x_k1[i]/=matriz_A[i][i]
+
+        return vetor_x_k1
+    
+    def questao03(self, matriz_A, vetor_x_k, vetor_b):
         """
         documentar
         """
+        # a letra i que varre o beta tem o range da dimenssão N da matriz
+        beta=vetor_x_k[:]
+        for i in range(len(matriz_A)):
+            beta[i]=0
+            for j in range(0,i,1):
+                #print(matriz_A[i][j])
+                beta[i]+=abs(matriz_A[i][j])*beta[i]
+            for j in range(i+1,len(matriz_A),1):
+                #print(matriz_A[i][j])
+                beta[i]+=abs(matriz_A[i][j])
+            beta[i]/=abs(matriz_A[i][i])
+            if beta[i] >= 1 :
+                print("beta: ",beta[i])
+                return "não se pode afirmar a convergencia"
+        return "ok"
         """
         size = len(matrix)
         L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
@@ -173,39 +133,42 @@ class Lista4(Grupo5_ListaX.ListaX):
                     if c != 0:
                         for k in range(i+1, size):
                             matrix[j][k]-=c*matrix[i][k]
-    
-        return L, matrix
-"""
-    def questao04(self, matrix):
+        """
+       
+
+    def questao04(self, matriz_A, vetor_x_k, vetor_b):
         """
         documentar
         """
-"""
-        size = len(matrix)
-        L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
+        if self.questao01(matriz_A, vetor_x_k, vetor_b) == None:
+            print("Não passou no Critério das linhas")
+            if self.questao03(matriz_A, vetor_x_k, vetor_b) == None:
+                print("Não passou no Critério de Sassenfeld")
+                return None
+        vetor_x_k1=vetor_x_k[:]
+        for iterecoes in range(0,20, 1): # A questão não expecificou nenhum parametro sobre quando parar
+            vetor_x_k=vetor_x_k1[:]
+            for i in range(len(matriz_A)):
+                vetor_x_k1[i]=0
+                
+                for j in range(0,i,1):
+                    #print(matriz_A[i][j]," * ", vetor_x_k1[j])
+                    vetor_x_k1[i]-=matriz_A[i][j]*vetor_x_k1[j]
+                    
+                for j in range(i+1,len(matriz_A),1):
+                    #print(matriz_A[i][j]," * ", vetor_x_k[j])
+                    vetor_x_k1[i]-=matriz_A[i][j]*vetor_x_k[j]
 
-        maiorEmModulo=0
+                vetor_x_k1[i]+=vetor_b[i]
+                vetor_x_k1[i]/=matriz_A[i][i]
 
-        for i in range(size):
-            for i2 in range(i, size,1):
-                if abs(matrix[i2][i])>matrix[maiorEmModulo][i]:
-                    maiorEmModulo=i2
-            matrix.insert(i,matrix.pop(maiorEmModulo))
-            for j in range((i+1),(size), 1):
-                if matrix[i][i] != 0:
-                    c = matrix[j][i]/matrix[i][i]
-                    L[j][i] = c
-                    if c != 0:
-                        for k in range(len(matrix[i])):
-                            matrix[j][k]-=c*matrix[i][k]
-
-        return L, matrix
-"""
+        return vetor_x_k1
+    
     def questao05(self, matrix, vector):
         """
         documentar
         """
-"""
+        """
         size = len(matrix)
         L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
         U = matrix
@@ -231,14 +194,15 @@ class Lista4(Grupo5_ListaX.ListaX):
             x[i] = vector[i]
             for j in range(i, size, -1):
                 x[i] -= L[i][j]*x[j]
-        return L, U, x, y
         """
+        pass
+        return None
 
     def questao06(self, matrix, vector):
         """
         documentar
         """
-"""
+        """
         size = len(matrix)
         L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
         U = matrix
@@ -264,13 +228,15 @@ class Lista4(Grupo5_ListaX.ListaX):
             x[i] = vector[i]
             for j in range(i, size, -1):
                 x[i] -= L[i][j]*x[j]
-        return L, U, x, y
         """
+        pass
+        return None
+
     def questao07(self, matrix, vector):
         """
         documentar
         """
-"""
+        """
         size = len(matrix)
         L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
         U = matrix
@@ -296,13 +262,15 @@ class Lista4(Grupo5_ListaX.ListaX):
             x[i] = vector[i]
             for j in range(i, size, -1):
                 x[i] -= L[i][j]*x[j]
-        return L, U, x, y
         """
+        pass
+        return None
+
     def questao08(self, matrix, vector):
         """
         documentar
         """
-"""
+        """
         size = len(matrix)
         L = [[1 if x == y else 0 for y in range(size)] for x in range(size)]
         U = matrix
@@ -329,17 +297,74 @@ class Lista4(Grupo5_ListaX.ListaX):
             for j in range(i, size, -1):
                 x[i] -= L[i][j]*x[j]
         return L, U, x, y
-        
-"""
+        """
+        return None
+
     def test(self):
         """
         Define todos os testes da lista
         """
-       
-        result = self.questao01(matriz, vetor)
+        matriz_A= [[1, 1], [1, -3]]
+        vetor_x_k=[0.7, -1.6]
+        vetor_b=[3, -3]
+        print(matriz_A)
+        print(vetor_x_k)
+        print(vetor_b)
+        result = self.questao01(matriz_A, vetor_x_k, vetor_b)
         if result == None:
             print("O método falhou")
         else:
-            print("solucao:")
+            print("solucao q_01:")
+            print(result)
+        matriz_A= [[10, 2, 1], [1, 5, 1], [2, 3, 10]]
+        vetor_x_k=[0.7, -1.6, 0.6]
+        vetor_b=[7, -8, 6]
+        print(matriz_A)
+        print(vetor_x_k)
+        print(vetor_b)
+        result = self.questao02(matriz_A, vetor_x_k, vetor_b)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao q_02:")
+            print(result)
+
+        matriz_A= [[1, 0.5, -0.1, 0.1], [0.2, 1, -0.2, -0.1],[-0.1, -0.2, 1, 0.2],[0.1, 0.3, 0.2, 1]]
+        vetor_x_k=[0.7, 1, 1, -1.6]
+        vetor_b=[0.2, -2.6, 1, -2.5]
+        print(matriz_A)
+        print(vetor_x_k)
+        print(vetor_b)
+        result = self.questao03(matriz_A, vetor_x_k, vetor_b)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao q_03:")
+            print(result)
+
+        matriz_A= [[2, 1, 3], [0, -1, 1], [1, 0, 3]]
+        vetor_x_k=[0.7, -1.6, 0.6]
+        vetor_b=[9, 1, 3]
+        print(matriz_A)
+        print(vetor_x_k)
+        print(vetor_b)
+        result = self.questao03(matriz_A, vetor_x_k, vetor_b)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao q_03:")
+            print(result)
+
+        matriz_A= [[10, 2, 1], [1, 5, 1], [2, 3, 10]]
+        vetor_x_k=[0.7, -1.6, 0.6]
+        vetor_b=[7, -8, 6]
+        print(matriz_A)
+        print(vetor_x_k)
+        print(vetor_b)
+        result = self.questao04(matriz_A, vetor_x_k, vetor_b)
+        if result == None:
+            print("O método falhou")
+        else:
+            print("solucao q_04:")
             print(result)
 
