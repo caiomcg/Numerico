@@ -50,6 +50,7 @@ from solucoes import Grupo5_Lista1 # Importa as soluções da primeira lista
 from solucoes import Grupo5_Lista2 # Importa as soluções da segunda lista
 from solucoes import Grupo5_Lista3 # Importa as soluções da terceira lista
 from solucoes import Grupo5_Lista4 # Importa as soluções da terceira lista
+from solucoes import Grupo5_Lista5 # Importa as soluções da terceira lista
 
 if __name__ == "__main__":
     sys.setrecursionlimit(100000) # A recursão limite do python precisa ser sobreescrita
