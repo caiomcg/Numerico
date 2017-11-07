@@ -61,6 +61,7 @@ if __name__ == "__main__":
     LISTAS.append(Grupo5_Lista2.Lista2()) # Instancia as solucoes da lista 2
     LISTAS.append(Grupo5_Lista3.Lista3()) # Instancia as solucoes da lista 3
     LISTAS.append(Grupo5_Lista4.Lista4()) # Instancia as solucoes da lista 4
+    LISTAS.append(Grupo5_Lista5.Lista5()) # Instancia as solucoes da lista 4
 
     for lista in LISTAS:
         print("\n\n --- " + str(lista.getname()) + "---\n\n")
