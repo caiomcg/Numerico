@@ -8,6 +8,14 @@ Este repositório contém as soluções para a lista de exercícios designadas d
 ## Requirements
 - [Python 3.5.2](https://www.python.org/downloads/release/python-352/)
 
+## External dependencies
+```sh
+  apt install python-pip
+  pip install numpy
+  pip install matplotlib
+  apt install python-tk
+```
+
 ## Cloning
 
 ```sh

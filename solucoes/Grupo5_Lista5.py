@@ -58,6 +58,7 @@ from tkinter import Label, LabelFrame, Entry, Text, Button, Listbox
 
 import numpy as np
 
+from threading import Thread
 
 """
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Questão 2º(SEGUNDA) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -334,5 +335,7 @@ class Lista5(Grupo5_ListaX.ListaX):
 
         # Calcula theta e exibe o gráfico
         self.calculate(p, n, points, g)
-
-        self.window.mainloop()
+        
+        while True:
+            self.window.update_idletasks()
+            self.window.update()
