@@ -46,6 +46,7 @@ SOFTWARE.
 
 from solucoes import Grupo5_ListaX
 
+import math
 
 class Lista6(Grupo5_ListaX.ListaX):
     """
@@ -59,3 +60,14 @@ class Lista6(Grupo5_ListaX.ListaX):
         Define todos os testes da lista
         """
         print("\n\nQuestão 3\n")
+        
+    # Cálcula I
+    #          TR
+    def questao01(a, b, n, lambda_func):
+        h = (b-a)/n
+        soma = lambda_func(a)
+        for i in range(1, n):
+           soma = soma + 2*lambda_func(h*i)
+        soma = soma + lambda_func(b)
+        ITR = (h/2)*soma
+        return ITR
