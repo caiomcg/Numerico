@@ -23,7 +23,7 @@ E-Mail: thiago.luiz@lavid.ufpb.br
 License:
 MIT License
 
-Copyright (c) 2017 Caio Marcelo Campoy Guedes, Diego Filipe Souza de Lima, 
+Copyright (c) 2016 Caio Marcelo Campoy Guedes, Diego Filipe Souza de Lima, 
                    Germano Martins de Souza, Kevin Vieira Lucena Veloso,
                    Richelieu Ramos de Andrade Costa, Thiago Luiz Pereira Nunes
 
@@ -44,31 +44,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import sys # Opções do sistema
+from solucoes import Grupo5_ListaX
 
-from solucoes import Grupo5_Lista1 # Importa as soluções da primeira lista
-from solucoes import Grupo5_Lista2 # Importa as soluções da segunda lista
-from solucoes import Grupo5_Lista3 # Importa as soluções da terceira lista
-from solucoes import Grupo5_Lista4 # Importa as soluções da quarta lista
-from solucoes import Grupo5_Lista5 # Importa as soluções da quinta lista
-from solucoes import Grupo5_Lista6 # Importa as soluções da sexta lista
 
-if __name__ == "__main__":
-    sys.setrecursionlimit(100000) # A recursão limite do python precisa ser sobreescrita
+class Lista6(Grupo5_ListaX.ListaX):
+    """
+    As questões implementadas consistem em metodos desta classe.
+    """
+    def __init__(self):
+        Grupo5_ListaX.ListaX.__init__(self, "Lista6")
 
-    LISTAS = [] # Armazena todas as lista e as executa em sequência
-
-    LISTAS.append(Grupo5_Lista1.Lista1()) # Instancia as solucoes da lista 1
-    LISTAS.append(Grupo5_Lista2.Lista2()) # Instancia as solucoes da lista 2
-    LISTAS.append(Grupo5_Lista3.Lista3()) # Instancia as solucoes da lista 3
-    LISTAS.append(Grupo5_Lista4.Lista4()) # Instancia as solucoes da lista 4
-    LISTAS.append(Grupo5_Lista5.Lista5()) # Instancia as solucoes da lista 4
-    LISTAS.append(Grupo5_Lista6.Lista6()) # Instancia as solucoes da lista 4
-
-    for lista in LISTAS:
-        print("\n\n --- " + str(lista.getname()) + "---\n\n")
-        try:
-            lista.test()
-        except:
-            pass
-        print("\n\n------------------------------------\n")
+    def test(self):
+        """
+        Define todos os testes da lista
+        """
+        print("\n\nQuestão 3\n")
