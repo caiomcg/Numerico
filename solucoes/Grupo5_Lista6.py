@@ -60,16 +60,33 @@ class Lista6(Grupo5_ListaX.ListaX):
 
     def __gaussianQuadractureTwoPoints(self, equation, a=0.0, b=1.0,):
         X1 = math.sqrt(3)/3.0
+        X2 = -X1
 
         if a != -1 and b != 1:
             dx = self.__getDx(a,b)
             x = lambda a, b, t : (a + b + t * a - t * b) / 2.0
-            return (dx * equation(x(a, b, X1)) + equation(x(a, b, -X1)))
+            return (dx * equation(x(a, b, X1)) + equation(x(a, b, X2)))
         else:
-            return (equation(X1) + equation(-X1))
+            return (equation(X1) + equation(X2))
 
         return None
-             
+
+    def __gaussianQuadractureThreePoints(self, equation, a=0.0, b=1.0,):
+        X1 = math.sqrt(3/5.0)
+        X2 = -X1
+        X3 = 0
+
+        A1 = A2 = 5 / 9.0
+        A3 = 8 / 9.0
+
+        if a != -1 and b != 1:
+            dx = self.__getDx(a,b)
+            x = lambda a, b, t : (a + b + t * a - t * b) / 2.0
+            return (dx * (A1 * equation(x(a, b, X1)) + A3 * equation(x(a, b, X3)) + A2 * equation(x(a, b, X2))))
+        else:
+            return (equation(X1) + equation(X2) + equation(X3))
+
+        return None           
 
     def questao01(a, b, n, lambda_func):
         h = (b-a)/n
@@ -96,6 +113,8 @@ class Lista6(Grupo5_ListaX.ListaX):
     def questao3(self, equation, a=0.0, b=1.0, n=1):
         if n == 2:
             return self.__gaussianQuadractureTwoPoints(equation, a, b)
+        elif n == 3:
+            return self.__gaussianQuadractureThreePoints(equation, a, b)
 
     def test(self):
         """
@@ -120,3 +139,10 @@ class Lista6(Grupo5_ListaX.ListaX):
         print("Resposta: {}\n".format(self.questao3(lambda x: math.sqrt(2 - x**2), -1, 1, 2)))
         print("Integral de 0 a 10 e equação: e**(-x))")
         print("Resposta: {}\n".format(self.questao3(lambda x: math.e**(-x), 0, 10, 2)))
+
+        print("\n\nQuestão 4\n")
+
+        print("Para 3 pontos:\n\n")
+
+        print("Integral de 2 a 3 e equação: x / (1 + x ** 4)")
+        print("Resposta: {}\n".format(self.questao3(lambda x: x / (1 + x ** 4), 2, 3, 3)))
