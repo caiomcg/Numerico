@@ -69,7 +69,8 @@ class Lista6(Grupo5_ListaX.ListaX):
             return (equation(X1) + equation(-X1))
 
         return None
-            
+             
+
     def questao01(a, b, n, lambda_func):
         h = (b-a)/n
         soma = lambda_func(a)
@@ -79,6 +80,19 @@ class Lista6(Grupo5_ListaX.ListaX):
         ITR = (h/2)*soma
         return ITR
 
+    def questao02(a, b, n, lambda_func):
+        h = (b-a)/n
+        soma = lambda_func(a)
+        #i impar
+        for i in range(1, n, 2):
+            soma = soma + 4*lambda_func(h*i)
+        #i par
+        for i in range(2, n, 2):
+            soma = soma + 2*lambda_func(h*i)
+        soma = soma + lambda_func(b)
+        ISR = (h/3)*soma
+        return ISR
+
     def questao3(self, equation, a=0.0, b=1.0, n=1):
         if n == 2:
             return self.__gaussianQuadractureTwoPoints(equation, a, b)
@@ -87,11 +101,22 @@ class Lista6(Grupo5_ListaX.ListaX):
         """
         Define todos os testes da lista
         """
+
+        print("\n\nQuestão 1\n")
+        
+        #print(self.questao01(0, 1, 10, lambda x : math.exp(x)))
+        #print(self.questao01(0, 1, 10, lambda x : x**2))
+
+        print("\n\nQuestão 2\n")
+        
+        #print(questao02(0, 1, 10, lambda x : math.exp(x)))
+        #print(questao02(0, 1, 10, lambda x : x**2))
+
         print("\n\nQuestão 3\n")
 
         print("Para 2 pontos:\n\n")
 
         print("Integral de -1 a 1 e equação: sqrt(2 - x**2)")
-        print("Resposta: {}\n", self.questao3(lambda x: math.sqrt(2 - x**2), -1, 1, 2))
+        print("Resposta: {}\n".format(self.questao3(lambda x: math.sqrt(2 - x**2), -1, 1, 2)))
         print("Integral de 0 a 10 e equação: e**(-x))")
-        print("Resposta: {}\n", self.questao3(lambda x: math.e**(-x), 0, 10, 2))
+        print("Resposta: {}\n".format(self.questao3(lambda x: math.e**(-x), 0, 10, 2)))
