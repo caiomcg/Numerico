@@ -84,7 +84,7 @@ class Lista6(Grupo5_ListaX.ListaX):
             x = lambda a, b, t : (a + b + t * a - t * b) / 2.0
             return (dx * (A1 * equation(x(a, b, X1)) + A3 * equation(x(a, b, X3)) + A2 * equation(x(a, b, X2))))
         else:
-            return (equation(X1) + equation(X2) + equation(X3))
+            return (A1 * equation(X1) + A3 * equation(X2) + A2 * equation(X3))
 
         return None           
 
