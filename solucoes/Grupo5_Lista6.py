@@ -61,6 +61,9 @@ class Lista6(Grupo5_ListaX.ListaX):
         """
         print("\n\nQuestão 3\n")
         
+        print( questao01( 0, 1, 10, lambda x : math.exp(x) ) )
+        print( questao01( 0, 1, 10, lambda x : x**2 ) )
+        
     # Cálcula I
     #          TR
     def questao01(a, b, n, lambda_func):
