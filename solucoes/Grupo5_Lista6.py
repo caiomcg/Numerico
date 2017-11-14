@@ -88,7 +88,7 @@ class Lista6(Grupo5_ListaX.ListaX):
 
         return None           
 
-    def questao01(a, b, n, lambda_func):
+    def questao01(self, a, b, n, lambda_func):
         h = (b-a)/n
         soma = lambda_func(a)
         for i in range(1, n):
@@ -97,7 +97,7 @@ class Lista6(Grupo5_ListaX.ListaX):
         ITR = (h/2)*soma
         return ITR
 
-    def questao02(a, b, n, lambda_func):
+    def questao02(self, a, b, n, lambda_func):
         h = (b-a)/n
         soma = lambda_func(a)
         #i impar
@@ -110,7 +110,7 @@ class Lista6(Grupo5_ListaX.ListaX):
         ISR = (h/3)*soma
         return ISR
 
-    def questao3(self, equation, a=0.0, b=1.0, n=1):
+    def questao03_04(self, equation, a=0.0, b=1.0, n=1):
         if n == 2:
             return self.__gaussianQuadractureTwoPoints(equation, a, b)
         elif n == 3:
@@ -123,26 +123,26 @@ class Lista6(Grupo5_ListaX.ListaX):
 
         print("\n\nQuestão 1\n")
         
-        #print(self.questao01(0, 1, 10, lambda x : math.exp(x)))
-        #print(self.questao01(0, 1, 10, lambda x : x**2))
+        print(self.questao01(0, 1, 10, lambda x : math.exp(x)))
+        print(self.questao01(0, 1, 10, lambda x : x**2))
 
         print("\n\nQuestão 2\n")
         
-        #print(questao02(0, 1, 10, lambda x : math.exp(x)))
-        #print(questao02(0, 1, 10, lambda x : x**2))
+        print(self.questao02(0, 1, 10, lambda x : math.exp(x)))
+        print(self.questao02(0, 1, 10, lambda x : x**2))
 
         print("\n\nQuestão 3\n")
 
         print("Para 2 pontos:\n\n")
 
         print("Integral de -1 a 1 e equação: sqrt(2 - x**2)")
-        print("Resposta: {}\n".format(self.questao3(lambda x: math.sqrt(2 - x**2), -1, 1, 2)))
+        print("Resposta: {}\n".format(self.questao03_04(lambda x: math.sqrt(2 - x**2), -1, 1, 2)))
         print("Integral de 0 a 10 e equação: e**(-x))")
-        print("Resposta: {}\n".format(self.questao3(lambda x: math.e**(-x), 0, 10, 2)))
+        print("Resposta: {}\n".format(self.questao03_04(lambda x: math.e**(-x), 0, 10, 2)))
 
         print("\n\nQuestão 4\n")
 
         print("Para 3 pontos:\n\n")
 
         print("Integral de 2 a 3 e equação: x / (1 + x ** 4)")
-        print("Resposta: {}\n".format(self.questao3(lambda x: x / (1 + x ** 4), 2, 3, 3)))
+        print("Resposta: {}\n".format(self.questao03_04(lambda x: x / (1 + x ** 4), 2, 3, 3)))
