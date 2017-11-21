@@ -11,9 +11,11 @@ Este repositório contém as soluções para a lista de exercícios designadas d
 ## External dependencies
 ```sh
   apt install python-pip
+  apt install python3-pip python3-dev
   pip install numpy
   pip install matplotlib
   apt install python-tk
+  apt install python3-scipy
 ```
 
 ## Cloning
