@@ -47,6 +47,10 @@ SOFTWARE.
 from solucoes import Grupo5_ListaX
 
 import math
+import scipy
+import scipy.sparse as sparse
+import scipy.sparse.linalg
+import numpy
 
 class Lista7(Grupo5_ListaX.ListaX):
 	"""
@@ -156,6 +160,67 @@ class Lista7(Grupo5_ListaX.ListaX):
 				#print("y= ",y)
 			return y
 
+	def questão02(self, point_a, point_b, number): 
+		dx = 1/(number-1.0)
+		delta = -1.0
+		K = 1.0
+
+		#grid points
+		x = numpy.linspace(point_a,point_b,number)
+		
+		#create time steps
+		k = 0.5/100
+		TFinal = 1
+		NumOfTimeSteps = int(TFinal/k)
+
+		#initial conditions
+		c0 = numpy.transpose([numpy.ones(number)*1.0])
+
+		#source term
+		F = numpy.transpose([numpy.zeros(number)])
+		F[-1]=2.0*K*delta*(1.0/dx+1.0)
+		# print F
+
+		#create matrices with boundary conditions
+		A1=numpy.zeros([number])
+		A2=numpy.zeros([number])
+		A1[0]=0.0 # constant value boundary
+		for i in range(1,number-1):
+			array = numpy.zeros([number])
+			array[i-1:i-1+3] = [1,-2,1]
+			A1=numpy.vstack([A1,array])
+			array = numpy.zeros([number])
+			#array[i-1:i-1+3] = [-1.0/x[i],0.0,1.0/x[i]] #x is the grid spacing
+			array[i-1:i-1+3] = [-1.0,0.0,1.0]
+			A2=numpy.vstack([A2,array])
+		array = numpy.zeros([number])
+		array[-2:]=[2,-2] #gradient boundary condition
+		A1=numpy.vstack([A1,array])
+		# print A1
+		A1=A1*K/dx/dx
+		A1=scipy.sparse.csr_matrix(A1)
+		array = numpy.zeros([number])
+		A2=numpy.vstack([A2,array])
+		# print A2
+		A2=A2*2.0*K/2.0/dx #note: grid factor, 1/x, is built into A2 matrix already
+		A2=scipy.sparse.csr_matrix(A2)
+
+		data = []
+
+		#identity matrix
+		I = sparse.identity(number)
+
+		# print("Time step = %g \t Time = %g"%(0, 0))
+		for i in range(NumOfTimeSteps):
+			A = (I - k/2.0*A1 - k/2.0*A2)
+			b = (I + k/2.0*A1 + k/2.0*A2)*c0+k*F
+			c0 = numpy.transpose(numpy.mat(sparse.linalg.spsolve(A, b)))
+			# print("Time step = %g \t Time = %g"%(i+1, k*(i+1)))
+			data.append(c0)
+
+		print("\n\nAproximações")
+		print(c0[:,-1])
+
 	def test(self):
 		"""
 		Define todos os testes da lista
@@ -197,3 +262,8 @@ class Lista7(Grupo5_ListaX.ListaX):
 		print("y'=-y+x+2=f(x,y), xE[0,0.3]")
 		print("y(0)=2, h=0.1")
 		print("h) y= ",self.questao01('h', 2, 0, 0.3,0.1, lambda x,y : (-y+x+2)))
+
+
+		print("\n\nQuestão 2\n")
+		print("\nMetodo das diferenças Finitas para N = 10 e intervalo [0,1]")
+		self.questão02(0, 1, 10)
