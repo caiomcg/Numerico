@@ -59,37 +59,15 @@ class Lista7(Grupo5_ListaX.ListaX):
 	def __init__(self):
 		Grupo5_ListaX.ListaX.__init__(self, "Lista7")
 
-	def __getDx(self, a, b):
-		return (b - a) / 2.0
-
-	def __gaussianQuadractureTwoPoints(self, equation, a=0.0, b=1.0,):
-		X1 = math.sqrt(3)/3.0
-		X2 = -X1
-
-		if a != -1 and b != 1:
-			dx = self.__getDx(a,b)
-			x = lambda a, b, t : (a + b + t * a - t * b) / 2.0
-			return (dx * equation(x(a, b, X1)) + equation(x(a, b, X2)))
-		else:
-			return (equation(X1) + equation(X2))
-
-		return None
-
-	def __gaussianQuadractureThreePoints(self, equation, a=0.0, b=1.0,):
-		X1 = math.sqrt(3/5.0)
-		X2 = -X1
-		X3 = 0
-
-		A1 = A2 = 5 / 9.0
-		A3 = 8 / 9.0
-
-		if a != -1 and b != 1:
-			dx = self.__getDx(a,b)
-			x = lambda a, b, t : (a + b + t * a - t * b) / 2.0
-			return (dx * (A1 * equation(x(a, b, X1)) + A3 * equation(x(a, b, X3)) + A2 * equation(x(a, b, X2))))
-		else:
-			return (A1 * equation(X1) + A3 * equation(X2) + A2 * equation(X3))
-		return None
+	def __taylor(self, x0, y0, w0, n, first_derivative, second_derivative):
+		y = y0
+		x = x0
+		w = w0
+		h = (y - x) / float(n)
+		for i in range(0, n):
+			w = w + h* ((first_derivative(x, w)) + ((h / 2.0) * (first_derivative(x, w) + second_derivative(x, w))))
+			x += h
+		return w
 		
 	def questao01(self, letra, y0, x0, xn, h, lambda_func):
 		y=0
@@ -100,7 +78,6 @@ class Lista7(Grupo5_ListaX.ListaX):
 				y_old=y
 				y=y_old+h*lambda_func(x_old,y_old)
 				x_old=x_old+h
-				#print("x_old= ",x_old)
 			return y
 		elif letra == 'b':
 			y=y0
@@ -109,8 +86,6 @@ class Lista7(Grupo5_ListaX.ListaX):
 				y_old=y
 				y=y_old+2*h*lambda_func(x_old,y_old)
 				x_old=x_old+h
-				#print("x_old= ",x_old)
-				#print("y= ",y)
 			return y
 		elif letra == 'e':
 			y=y0
@@ -129,8 +104,6 @@ class Lista7(Grupo5_ListaX.ListaX):
 				y_old=y
 				y=y_old+h*lambda_func(x_old+h/2,y_old+h*lambda_func(x_old,y_old)/2)
 				x_old=x_old+h
-				#print("x_old= ",x_old)
-				#print("y= ",y)
 			return y
 		elif letra == 'g':
 			y=y0
@@ -142,8 +115,6 @@ class Lista7(Grupo5_ListaX.ListaX):
 				k3=lambda_func(x_old+(3*h)/4,y_old+(3*k2)/4)
 				y=y_old+h*(2*k1/9 + 1*k2/3 + 4*k3/9)
 				x_old=x_old+h
-				#print("x_old= ",x_old)
-				#print("y= ",y)
 			return y
 		elif letra == 'h':
 			y=y0
@@ -156,8 +127,6 @@ class Lista7(Grupo5_ListaX.ListaX):
 				k4=lambda_func(x_old+h,y_old+h*k3)
 				y=y_old+h*(k1 + 2*k2 + 2*k3+k4)/6
 				x_old=x_old+h
-				#print("x_old= ",x_old)
-				#print("y= ",y)
 			return y
 
 	def questão02(self, point_a, point_b, number): 
@@ -165,57 +134,50 @@ class Lista7(Grupo5_ListaX.ListaX):
 		delta = -1.0
 		K = 1.0
 
-		#grid points
 		x = numpy.linspace(point_a,point_b,number)
 		
-		#create time steps
 		k = 0.5/100
 		TFinal = 1
 		NumOfTimeSteps = int(TFinal/k)
 
-		#initial conditions
 		c0 = numpy.transpose([numpy.ones(number)*1.0])
 
-		#source term
 		F = numpy.transpose([numpy.zeros(number)])
 		F[-1]=2.0*K*delta*(1.0/dx+1.0)
-		# print F
-
-		#create matrices with boundary conditions
+		
 		A1=numpy.zeros([number])
 		A2=numpy.zeros([number])
-		A1[0]=0.0 # constant value boundary
+		A1[0]=0.0
 		for i in range(1,number-1):
 			array = numpy.zeros([number])
 			array[i-1:i-1+3] = [1,-2,1]
 			A1=numpy.vstack([A1,array])
 			array = numpy.zeros([number])
-			#array[i-1:i-1+3] = [-1.0/x[i],0.0,1.0/x[i]] #x is the grid spacing
 			array[i-1:i-1+3] = [-1.0,0.0,1.0]
 			A2=numpy.vstack([A2,array])
 		array = numpy.zeros([number])
-		array[-2:]=[2,-2] #gradient boundary condition
+		array[-2:]=[2,-2]
 		A1=numpy.vstack([A1,array])
-		# print A1
+
 		A1=A1*K/dx/dx
 		A1=scipy.sparse.csr_matrix(A1)
 		array = numpy.zeros([number])
 		A2=numpy.vstack([A2,array])
-		# print A2
-		A2=A2*2.0*K/2.0/dx #note: grid factor, 1/x, is built into A2 matrix already
+
+		A2=A2*2.0*K/2.0/dx 
 		A2=scipy.sparse.csr_matrix(A2)
 
 		data = []
 
-		#identity matrix
+
 		I = sparse.identity(number)
 
-		# print("Time step = %g \t Time = %g"%(0, 0))
+
 		for i in range(NumOfTimeSteps):
 			A = (I - k/2.0*A1 - k/2.0*A2)
 			b = (I + k/2.0*A1 + k/2.0*A2)*c0+k*F
 			c0 = numpy.transpose(numpy.mat(sparse.linalg.spsolve(A, b)))
-			# print("Time step = %g \t Time = %g"%(i+1, k*(i+1)))
+			
 			data.append(c0)
 
 		print("\n\nAproximações")
@@ -237,11 +199,10 @@ class Lista7(Grupo5_ListaX.ListaX):
 		print("y(0)=2, h=0.1")
 		print("b) y= ",self.questao01('b', 2, 0, 0.3,0.1, lambda x,y : (-y+x+2)))
 
-
-
-        #todo: c, d
-
-
+		print("\nPVI")
+		print("y'=y-x**2+1=f(x,y), xE[0,2]")
+		print("y(0)=0,5, h=0.2")
+		print("c) y= ",self.__taylor(0, 2, 0.5, 10, lambda x,y : (y-x**2+1), lambda x,y : (-2*x)))
 
 		print("\nPVI")
 		print("y'=-y+x+2=f(x,y), xE[0,0.3]")
