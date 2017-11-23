@@ -262,7 +262,7 @@ class Lista7(Grupo5_ListaX.ListaX):
         print("\nMetodo das diferenças Finitas para N = 10 e intervalo [0,1]")
         self.questão02(0, 1, 10)
         
-	print("\n\nQuestão 3\n")
-	print("\nMetodo das diferenças Finitas para N = 10 e intervalo [1,5]")
-	self.questão03(1, 5, 10)        
+        print("\n\nQuestão 3\n")
+        print("\nMetodo das diferenças Finitas para N = 10 e intervalo [1,5]")
+        self.questão02(1, 5, 10)     
         
