@@ -140,7 +140,7 @@ class Lista7(Grupo5_ListaX.ListaX):
                 x_old=x_old+h
             return y
 
-    def questão02(self, point_a, point_b, number):
+    def questao02(self, point_a, point_b, number):
         dx = 1/(number-1.0)
         delta = -1.0
         K = 1.0
@@ -194,7 +194,7 @@ class Lista7(Grupo5_ListaX.ListaX):
         print("\n\nAproximações")
         print(c0[:,-1])
         
-    def questão03(self, point_a, point_b, number):                
+    def questao03(self, point_a, point_b, number):                
         h = (point_b - point_a)/(number-1)
         y = numpy.zeros(number)
         x = [float for i in range(0,number)]
@@ -260,9 +260,9 @@ class Lista7(Grupo5_ListaX.ListaX):
 
         print("\n\nQuestão 2\n")
         print("\nMetodo das diferenças Finitas para N = 10 e intervalo [0,1]")
-        self.questão02(0, 1, 10)
+        self.questao02(0, 1, 10)
         
         print("\n\nQuestão 3\n")
         print("\nMetodo das diferenças Finitas para N = 10 e intervalo [1,5]")
-        self.questão02(1, 5, 10)     
+        self.questao03(1, 5, 10)     
         
