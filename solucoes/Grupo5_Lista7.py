@@ -193,6 +193,23 @@ class Lista7(Grupo5_ListaX.ListaX):
 
         print("\n\nAproximações")
         print(c0[:,-1])
+        
+    def questão03(self, point_a, point_b, number):                
+        h = (point_b - point_a)/(number-1)
+        y = numpy.zeros(number)
+        x = [float for i in range(0,number)]
+
+        for i in range(0, number):
+            x[i] = h*i
+
+        y[0] = point_a
+        y[number-1] = point_b                
+
+        for i in range(0, number-1):
+            y[i+1] = -y[i-1] + y[i]*(2+h**2*(numpy.sin(y[i]+i*h)))
+
+        for i in range(0, number):
+            print(y[i])    
 
     def test(self):
         """
@@ -244,3 +261,8 @@ class Lista7(Grupo5_ListaX.ListaX):
         print("\n\nQuestão 2\n")
         print("\nMetodo das diferenças Finitas para N = 10 e intervalo [0,1]")
         self.questão02(0, 1, 10)
+        
+		    print("\n\nQuestão 3\n")
+		    print("\nMetodo das diferenças Finitas para N = 10 e intervalo [1,5]")
+		    self.questão03(1, 5, 10)        
+        
